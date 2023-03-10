@@ -7,11 +7,11 @@ const Sight = require('./models/sights.js');
 app.use(express.json());
 app.use(cors());
 
+const albertLogin = "admin:admin"
 
 
 
-
-const mongoURI = 'mongodb+srv://admin:admin@cluster0.nrs7e1s.mongodb.net/sightseer?retryWrites=true&w=majority';
+const mongoURI = 'mongodb+srv://'+albertLogin+'@cluster0.nrs7e1s.mongodb.net/sightseer?retryWrites=true&w=majority';
 const db = mongoose.connection;
 mongoose
 	.connect(mongoURI)
