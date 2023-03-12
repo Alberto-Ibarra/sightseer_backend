@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const sightSchema = new mongoose.Schema({
     country: String,
+    continent: String,
     description: String,
     season: String,
     image: String,
