@@ -31,34 +31,38 @@ app.put('/sights/:id', async (req, res) => {
 	res.json(updatedSights);
 });
 
-
 // Worst Case.  need to make dry.
 
-app.get('/sights/asia/', async (req, res) => {
-	const continent = await Sight.find({ continent: 'Asia' });
-	res.json(continent);
-});
-app.get('/sights/africa/', async (req, res) => {
-	const continent = await Sight.find({ continent: 'Africa' });
-	res.json(continent);
-});
-app.get('/sights/northamerica/', async (req, res) => {
-	const continent = await Sight.find({ continent: 'North America' });
-	res.json(continent);
-});
-app.get('/sights/southamerica/', async (req, res) => {
-	const continent = await Sight.find({ continent: 'South America' });
-	res.json(continent);
-});
-app.get('/sights/europe/', async (req, res) => {
-	const continent = await Sight.find({ continent: 'Europe' });
-	res.json(continent);
-});
-app.get('/sights/australia/', async (req, res) => {
-	const continent = await Sight.find({ continent: 'Australia' });
-	res.json(continent);
-});
+// app.get('/sights/asia/', async (req, res) => {
+// 	const continent = await Sight.find({ continent: 'Asia' });
+// 	res.json(continent);
+// });
+// app.get('/sights/africa/', async (req, res) => {
+// 	const continent = await Sight.find({ continent: 'Africa' });
+// 	res.json(continent);
+// });
+// app.get('/sights/northamerica/', async (req, res) => {
+// 	const continent = await Sight.find({ continent: 'North America' });
+// 	res.json(continent);
+// });
+// app.get('/sights/southamerica/', async (req, res) => {
+// 	const continent = await Sight.find({ continent: 'South America' });
+// 	res.json(continent);
+// });
+// app.get('/sights/europe/', async (req, res) => {
+// 	const continent = await Sight.find({ continent: 'Europe' });
+// 	res.json(continent);
+// });
+// app.get('/sights/australia/', async (req, res) => {
+// 	const continent = await Sight.find({ continent: 'Australia' });
+// 	res.json(continent);
+// });
 
+app.get('/sights/:continent', async (req, res) => {
+	const continent = req.params.continent;
+	const sights = await Sight.find({ continent });
+	res.json(sights);
+});
 const mongoURI = process.env.MONGODB;
 const db = mongoose.connection;
 mongoose
