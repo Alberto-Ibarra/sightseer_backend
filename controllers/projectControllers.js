@@ -1,12 +1,24 @@
 const express = require('express');
 const router = express.Router();
-
+const sightsArr = require('../models/sightsSeed.js');
 const mongoose = require('mongoose');
 const Sight = require('../models/sights.js');
 
 // router.get('/', (req, res) => {
 // 	res.json({ usingThisController: true });
 // });
+
+// on use seed
+router.get('/seed', async (req, res) => {
+	try {
+	const seedSights = await Sight.create(sightsArr);
+	res.send(seedSights);}
+	catch(err) {
+		console.log(err);
+	}
+});
+
+
 
 // Index
 router.get('/', async (req, res) => {
