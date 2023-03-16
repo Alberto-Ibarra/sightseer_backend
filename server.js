@@ -2,11 +2,15 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors');
-const Sight = require('./models/sights.js');
 const logger = require('morgan');
+const bcrypt = require('bcrypt');
+
+const User = require('./models/userModel.js');
+const Sight = require('./models/sights.js');
 // controllers
 
 const projectController = require('./controllers/projectControllers');
+const userController = require('./controllers/userController');
 require('dotenv').config();
 
 // middleware
@@ -15,18 +19,30 @@ app.use(cors());
 app.use(logger('dev'));
 
 app.use('/sights', projectController);
+app.use('/users', userController);
 
 const mongoURI = process.env.MONGODB;
+
 const db = mongoose.connection;
 mongoose
-	.connect(mongoURI)
+	.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+
 	.then(() => {
 		console.log('connection to mongo is established');
-	})
-	.catch((err) => {
-		console.log('failed to connect to mongo:', err);
+		const usersCollection = db.collection('users');
 	});
-
+app.use((req, res, next) => {
+	res.setHeader('Access-Control-Allow-Origin', '*');
+	res.setHeader(
+		'Access-Control-Allow-Headers',
+		'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization'
+	);
+	res.setHeader(
+		'Access-Control-Allow-Methods',
+		'GET, POST, PUT, DELETE, PATCH, OPTIONS'
+	);
+	next();
+});
 app.listen(3000, () => {
 	console.log('listening on port 3000');
 });
